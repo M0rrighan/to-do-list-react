@@ -7,7 +7,6 @@ function InputTodo(props) {
 
   const onChange = e => {
     setInputField({
-      // ...inputField,
       title: e.target.value,
     });
   };
@@ -25,14 +24,18 @@ function InputTodo(props) {
   };
   
   return (
-      <form onSubmit={handleSubmit}>
+      <form
+        className="form-container" 
+        onSubmit={handleSubmit}
+      >
       <input 
         type="text" 
         placeholder="Add to do...."
         value={inputField.title}
         onChange={onChange}
+        className="input-text"
       />
-      <button>+</button>
+      <button className="input-submit">+</button>
       </form>
   );
 }
