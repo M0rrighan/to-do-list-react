@@ -1,10 +1,21 @@
 import React from 'react';
 
-function TodoItem() {
+function TodoItem(props) {
+  const {id, title, completed} = props.todo;
+  function handleCheckbox () {
+    props.updateCheckbox(id);
+  };
+
   return (
-    <div>
-      
-    </div>
+    <li>
+      <input 
+      type="checkbox" 
+      checked={completed}
+      onChange={handleCheckbox}
+      />
+      <span>{title}</span>
+      <button>DEL</button>
+    </li>
   )
 }
 
