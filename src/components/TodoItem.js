@@ -2,9 +2,14 @@ import React from 'react';
 
 function TodoItem(props) {
   const {id, title, completed} = props.todo;
+
   function handleCheckbox () {
     props.updateCheckbox(id);
-  };
+  }
+
+  function deleteItem () {
+    props.deleteItem(id);
+  }
 
   return (
     <li>
@@ -14,7 +19,7 @@ function TodoItem(props) {
       onChange={handleCheckbox}
       />
       <span>{title}</span>
-      <button>DEL</button>
+      <button onClick={deleteItem}>DEL</button>
     </li>
   )
 }

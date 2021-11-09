@@ -7,7 +7,8 @@ const items = props.todos.map((todo) => (
   <TodoItem 
     key={todo.id}
     todo={todo} 
-    updateCheckbox={props.updateCheckbox} 
+    updateCheckbox={props.updateCheckbox}
+    deleteItem={props.deleteItem}
   />
 ));
 

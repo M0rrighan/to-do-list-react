@@ -7,22 +7,22 @@ function TodoContainer() {
 const [todos, setTodos] = useState([
   {
     id: 1,
-    title: "Setup development environment",
+    title: "Task 1",
     completed: true
   },
   {
     id: 2,
-    title: "Develop website and add content",
+    title: "Task 2",
     completed: false
   },
   {
     id: 3,
-    title: "Deploy to live server",
+    title: "Task 3",
     completed: false
   }
 ]);
 
-function updateCheckbox(id) {
+const updateCheckbox = (id) => {
   setTodos(prevState => prevState.map((todo) => {
     if (todo.id === id) {
       return {
@@ -31,14 +31,24 @@ function updateCheckbox(id) {
     }
     return todo;
   }));
+};
 
-}
+const delTodo = id => {
+  setTodos([
+    ...todos.filter(todo => {
+      return todo.id !== id;
+    }),
+  ]);
+};
 
   return (
     <div>
       <Header />
       <InputTodo />
-      <TodoList todos={todos} updateCheckbox={updateCheckbox}/>
+      <TodoList 
+        todos={todos} 
+        updateCheckbox={updateCheckbox}
+        deleteItem={delTodo}/>
     </div>
   )
 }
