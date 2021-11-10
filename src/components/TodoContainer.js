@@ -5,23 +5,7 @@ import TodoList from './TodoList';
 import '../App.css';
 
 function TodoContainer() {
-const [todos, setTodos] = useState([
-  // {
-  //   id: 1,
-  //   title: "Task 1",
-  //   completed: true
-  // },
-  // {
-  //   id: 2,
-  //   title: "Task 2",
-  //   completed: false
-  // },
-  // {
-  //   id: 3,
-  //   title: "Task 3",
-  //   completed: false
-  // }
-]);
+const [todos, setTodos] = useState([]);
 
 const updateCheckbox = (id) => {
   setTodos(prevState => prevState.map((todo) => {
@@ -34,12 +18,15 @@ const updateCheckbox = (id) => {
   }));
 };
 
-const delTodo = id => {
-  setTodos([
-    ...todos.filter(todo => {
-      return todo.id !== id;
-    }),
-  ]);
+const updateTitle = (updatedTitle, id) => {
+  setTodos(
+    todos.map(todo => {
+      if (todo.id === id) {
+        todo.title = updatedTitle;
+      }
+      return todo;
+    })
+  );
 };
 
 const addTodoItem = title => {
@@ -51,6 +38,14 @@ const addTodoItem = title => {
   setTodos([...todos, newTodo]);
 };
 
+const deleteTodo = id => {
+  setTodos([
+    ...todos.filter(todo => {
+      return todo.id !== id;
+    }),
+  ]);
+};
+
   return (
     <div className="container">
       <div className="inner">
@@ -59,7 +54,9 @@ const addTodoItem = title => {
         <TodoList 
           todos={todos} 
           updateCheckbox={updateCheckbox}
-          deleteItem={delTodo}/>
+          updateTitle={updateTitle}
+          deleteItem={deleteTodo}
+        />
       </div>
     </div>
   )

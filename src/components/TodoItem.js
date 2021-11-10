@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from "./TodoItem.module.css";
 
 function TodoItem(props) {
@@ -8,8 +8,39 @@ function TodoItem(props) {
     props.updateCheckbox(id);
   }
 
-  function deleteItem () {
+  function handleDeleteItem () {
     props.deleteItem(id);
+  }
+
+  const [editing, setEditing] = useState(false);
+
+  // useEffect(() => {
+  //   return () => {
+  //     console.log("Cleaning up...")
+  //   }
+  // }, [])
+
+  const handleEditing = () => {
+    setEditing(true);
+  };
+
+  const handleUpdatedDone = (event) => {
+    if (event.key === "Enter" ) {
+      setEditing(false);
+    }
+  };
+
+  const handleUpdateTitle = (e) => {
+    props.updateTitle(e.target.value, id);
+  };
+
+  let viewMode = {};
+  let editMode = {};
+
+  if (editing) {
+    viewMode.display = 'none';
+  } else {
+    editMode.display = 'none';
   }
 
   const completedStyle = {
@@ -17,22 +48,32 @@ function TodoItem(props) {
     color: "#595959",
     opacity: 0.4,
     textDecoration: "line-through",
-  }
+  };
 
   return (
     <li className={styles.item}>
+      <div onDoubleClick={handleEditing} style={viewMode}>
+        <input 
+        type="checkbox" 
+        checked={completed}
+        onChange={handleCheckbox}
+        className={styles.checkbox}
+        />
+        <span style={completed ? completedStyle : null}>
+          {title}
+        </span>
+        <button onClick={handleDeleteItem}>DEL</button>
+      </div>
       <input 
-      type="checkbox" 
-      checked={completed}
-      onChange={handleCheckbox}
-      className={styles.checkbox}
+        type="text" 
+        style={editMode} 
+        className={styles.textInput} 
+        value={title} 
+        onChange={handleUpdateTitle}
+        onKeyDown={handleUpdatedDone}
       />
-      <span style={completed ? completedStyle : null}>
-        {title}
-      </span>
-      <button onClick={deleteItem}>DEL</button>
     </li>
   )
 }
 
-export default TodoItem
+export default TodoItem;
