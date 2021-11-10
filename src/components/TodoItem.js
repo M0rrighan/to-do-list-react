@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from "./TodoItem.module.css";
+import { MdDeleteForever } from 'react-icons/md';
 
 function TodoItem(props) {
   const {id, title, completed} = props.todo;
@@ -62,7 +63,13 @@ function TodoItem(props) {
         <span style={completed ? completedStyle : null}>
           {title}
         </span>
-        <button onClick={handleDeleteItem}>DEL</button>
+        <button onClick={handleDeleteItem}>
+          <MdDeleteForever style={{
+            color: "#eb4747",
+            fontSize: "1.25rem",
+            fontWeight: "600",
+          }}/>
+        </button>
       </div>
       <input 
         type="text" 
