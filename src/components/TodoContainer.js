@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './Navbar';
 import Header from './Header';
 import InputTodo from './InputTodo';
 import TodoList from './TodoList';
 import '../App.css';
+import About from "../pages/About";
+import NoMatch from "../pages/NoMatch";
 
 function TodoContainer() {
 const [todos, setTodos] = useState([]);
@@ -76,19 +80,29 @@ const deleteTodo = id => {
 // }, []);
 
   return (
-    <div className="container">
-      <div className="inner">
-        <Header />
-        <InputTodo addTodoItem={addTodoItem}/>
-        <TodoList 
-          todos={todos} 
-          updateCheckbox={updateCheckbox}
-          updateTitle={updateTitle}
-          deleteItem={deleteTodo}
-        />
-      </div>
-    </div>
+    <>
+      <Navbar />
+      <Routes>
+        <Route exact path="/" element={
+          <div className="container">
+            <div className="inner">
+              <Header />
+              <InputTodo addTodoItem={addTodoItem}/>
+              <TodoList 
+                todos={todos} 
+                updateCheckbox={updateCheckbox}
+                updateTitle={updateTitle}
+                deleteItem={deleteTodo}
+              />
+            </div>
+          </div>
+        }>
+        </Route>
+        <Route path="/about" element={<About/>} />
+        <Route path="*" element={<NoMatch/>} />
+      </Routes>
+    </>
   )
 }
 
-export default TodoContainer
+export default TodoContainer;
