@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import InputTodo from './InputTodo';
 import TodoList from './TodoList';
@@ -6,6 +6,20 @@ import '../App.css';
 
 function TodoContainer() {
 const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    // getting stored items
+    const loadedTodos = JSON.parse(localStorage.getItem("todos"));
+
+    if (loadedTodos) {
+      setTodos(loadedTodos);
+    }
+  }, []);
+
+useEffect(() => {
+  // storing todos items
+  localStorage.setItem("todos", JSON.stringify(todos));
+}, [todos]);
 
 const updateCheckbox = (id) => {
   setTodos(prevState => prevState.map((todo) => {
@@ -45,6 +59,21 @@ const deleteTodo = id => {
     }),
   ]);
 };
+
+// ***** Fetch
+// ---Class Based---
+// componentDidMount() {
+//   fetch("https://jsonplaceholder.typicode.com/todos?_limit=10")
+//     .then(response => response.json())
+//     .then(data => console.log(data));
+// }
+
+// ---Function Based---
+// useEffect(() => {
+//   fetch("https://jsonplaceholder.typicode.com/todos?_limit=5")
+//     .then(response => response.json())
+//     .then(data => setTodos(data));
+// }, []);
 
   return (
     <div className="container">
