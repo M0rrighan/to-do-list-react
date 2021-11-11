@@ -5,104 +5,105 @@ import Header from './Header';
 import InputTodo from './InputTodo';
 import TodoList from './TodoList';
 import '../App.css';
-import About from "../pages/About";
-import NoMatch from "../pages/NoMatch";
+import About from '../pages/About';
+import NoMatch from '../pages/NoMatch';
 
 function TodoContainer() {
-const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState([]);
 
   useEffect(() => {
     // getting stored items
-    const loadedTodos = JSON.parse(localStorage.getItem("todos"));
+    const loadedTodos = JSON.parse(localStorage.getItem('todos'));
 
     if (loadedTodos) {
       setTodos(loadedTodos);
     }
   }, []);
 
-useEffect(() => {
+  useEffect(() => {
   // storing todos items
-  localStorage.setItem("todos", JSON.stringify(todos));
-}, [todos]);
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
 
-const updateCheckbox = (id) => {
-  setTodos(prevState => prevState.map((todo) => {
-    if (todo.id === id) {
-      return {
-        ...todo, completed: !todo.completed
-      };
-    }
-    return todo;
-  }));
-};
-
-const updateTitle = (updatedTitle, id) => {
-  setTodos(
-    todos.map(todo => {
+  const updateCheckbox = (id) => {
+    setTodos((prevState) => prevState.map((todo) => {
       if (todo.id === id) {
-        todo.title = updatedTitle;
+        return {
+          ...todo, completed: !todo.completed,
+        };
       }
       return todo;
-    })
-  );
-};
-
-const addTodoItem = title => {
-  const newTodo = {    
-    id: [...todos].length + 1,    
-    title: title,    
-    completed: false  
+    }));
   };
-  setTodos([...todos, newTodo]);
-};
 
-const deleteTodo = id => {
-  setTodos([
-    ...todos.filter(todo => {
-      return todo.id !== id;
-    }),
-  ]);
-};
+  const updateTitle = (updatedTitle, id) => {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === id) {
+          // eslint-disable-next-line no-param-reassign
+          todo.title = updatedTitle;
+        }
+        return todo;
+      }),
+    );
+  };
 
-// ***** Fetch
-// ---Class Based---
-// componentDidMount() {
-//   fetch("https://jsonplaceholder.typicode.com/todos?_limit=10")
-//     .then(response => response.json())
-//     .then(data => console.log(data));
-// }
+  const addTodoItem = (title) => {
+    const newTodo = {
+      id: [...todos].length + 1,
+      title,
+      completed: false,
+    };
+    setTodos([...todos, newTodo]);
+  };
 
-// ---Function Based---
-// useEffect(() => {
-//   fetch("https://jsonplaceholder.typicode.com/todos?_limit=5")
-//     .then(response => response.json())
-//     .then(data => setTodos(data));
-// }, []);
+  const deleteTodo = (id) => {
+    setTodos([
+      ...todos.filter((todo) => todo.id !== id),
+    ]);
+  };
+
+  // ***** Fetch
+  // ---Class Based---
+  // componentDidMount() {
+  //   fetch("https://jsonplaceholder.typicode.com/todos?_limit=10")
+  //     .then(response => response.json())
+  //     .then(data => console.log(data));
+  // }
+
+  // ---Function Based---
+  // useEffect(() => {
+  //   fetch("https://jsonplaceholder.typicode.com/todos?_limit=5")
+  //     .then(response => response.json())
+  //     .then(data => setTodos(data));
+  // }, []);
 
   return (
     <>
       <Navbar />
       <Routes>
-        <Route exact path="/" element={
-          <div className="container">
-            <div className="inner">
-              <Header />
-              <InputTodo addTodoItem={addTodoItem}/>
-              <TodoList 
-                todos={todos} 
-                updateCheckbox={updateCheckbox}
-                updateTitle={updateTitle}
-                deleteItem={deleteTodo}
-              />
+        <Route
+          index
+          element={(
+            <div className="container">
+              <div className="inner">
+                <Header />
+                <InputTodo addTodoItem={addTodoItem} />
+                <TodoList
+                  todos={todos}
+                  updateCheckbox={updateCheckbox}
+                  updateTitle={updateTitle}
+                  deleteItem={deleteTodo}
+                />
+              </div>
             </div>
-          </div>
-        }>
-        </Route>
-        <Route path="/about" element={<About/>} />
-        <Route path="*" element={<NoMatch/>} />
+        )}
+        />
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<NoMatch />} />
       </Routes>
     </>
-  )
+  );
 }
 
 export default TodoContainer;

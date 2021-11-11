@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import styles from "./TodoItem.module.css";
+import PropTypes from 'prop-types';
 import { MdDeleteForever } from 'react-icons/md';
+import styles from './TodoItem.module.css';
 
 function TodoItem(props) {
-  const {id, title, completed} = props.todo;
+  const { todo } = props;
+  const { id, title, completed } = todo;
 
-  function handleCheckbox () {
+  function handleCheckbox() {
     props.updateCheckbox(id);
   }
 
-  function handleDeleteItem () {
+  function handleDeleteItem() {
     props.deleteItem(id);
   }
 
@@ -26,7 +28,7 @@ function TodoItem(props) {
   };
 
   const handleUpdatedDone = (event) => {
-    if (event.key === "Enter" ) {
+    if (event.key === 'Enter') {
       setEditing(false);
     }
   };
@@ -35,8 +37,8 @@ function TodoItem(props) {
     props.updateTitle(e.target.value, id);
   };
 
-  let viewMode = {};
-  let editMode = {};
+  const viewMode = {};
+  const editMode = {};
 
   if (editing) {
     viewMode.display = 'none';
@@ -45,42 +47,50 @@ function TodoItem(props) {
   }
 
   const completedStyle = {
-    fontStyle: "italic",
-    color: "#595959",
+    fontStyle: 'italic',
+    color: '#595959',
     opacity: 0.4,
-    textDecoration: "line-through",
+    textDecoration: 'line-through',
   };
 
   return (
     <li className={styles.item}>
       <div onDoubleClick={handleEditing} style={viewMode}>
-        <input 
-        type="checkbox" 
-        checked={completed}
-        onChange={handleCheckbox}
-        className={styles.checkbox}
+        <input
+          type="checkbox"
+          checked={completed}
+          onChange={handleCheckbox}
+          className={styles.checkbox}
         />
         <span style={completed ? completedStyle : null}>
           {title}
         </span>
-        <button onClick={handleDeleteItem}>
+        <button type="button" onClick={handleDeleteItem}>
           <MdDeleteForever style={{
-            color: "#eb4747",
-            fontSize: "1.25rem",
-            fontWeight: "600",
-          }}/>
+            color: '#eb4747',
+            fontSize: '1.25rem',
+            fontWeight: '600',
+          }}
+          />
         </button>
       </div>
-      <input 
-        type="text" 
-        style={editMode} 
-        className={styles.textInput} 
-        value={title} 
+      <input
+        type="text"
+        style={editMode}
+        className={styles.textInput}
+        value={title}
         onChange={handleUpdateTitle}
         onKeyDown={handleUpdatedDone}
       />
     </li>
-  )
+  );
 }
+
+TodoItem.propTypes = {
+  updateTitle: PropTypes.func.isRequired,
+  updateCheckbox: PropTypes.func.isRequired,
+  deleteItem: PropTypes.func.isRequired,
+  todo: PropTypes.objectOf(PropTypes.object).isRequired,
+};
 
 export default TodoItem;
