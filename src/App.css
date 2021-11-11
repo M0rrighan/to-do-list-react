@@ -121,4 +121,6 @@ a {
 .about__content {
   padding: 8rem 40px;
   display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }

@@ -7,12 +7,12 @@ const Navbar = () => {
   const links = [
     {
       id: 1,
-      path: '/',
+      path: '/to-do-list-react/list',
       text: 'Home',
     },
     {
       id: 2,
-      path: '/about',
+      path: '/to-do-list-react/about',
       text: 'About',
     },
   ];
@@ -35,7 +35,7 @@ const Navbar = () => {
       <ul className={`menuNav ${navbarOpen ? ' showMenu' : ''}`}>
         {links.map((link) => (
           <li key={link.id}>
-            <NavLink to={link.path} onClick={handleToggle}>
+            <NavLink to={link.path} onClick={handleToggle} activeClassName="active" exact>
               {link.text}
             </NavLink>
           </li>
