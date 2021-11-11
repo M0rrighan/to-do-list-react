@@ -14,10 +14,10 @@ ReactDOM.render(
       <Navbar />
       <Routes>
         <Route
-          path="/to-do-list-react/list"
+          path="/to-do-list-react"
           element={<TodoContainer />}
         />
-        <Route path="/to-do-list-react/about" element={<About />} />
+        <Route path="/about" element={<About />} />
         <Route path="*" element={<NoMatch />} />
       </Routes>
     </Router>
