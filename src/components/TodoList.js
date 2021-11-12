@@ -3,14 +3,17 @@ import PropTypes from 'prop-types';
 import TodoItem from './TodoItem';
 
 function TodoList(props) {
-  const { todos } = props;
+  const {
+    todos, updateCheckbox, updateTitle, deleteItem,
+  } = props;
+
   const items = todos.map((todo) => (
     <TodoItem
       key={todo.id}
       todo={todo}
-      updateCheckbox={props.updateCheckbox}
-      updateTitle={props.updateTitle}
-      deleteItem={props.deleteItem}
+      updateCheckbox={updateCheckbox}
+      updateTitle={updateTitle}
+      deleteItem={deleteItem}
     />
   ));
 

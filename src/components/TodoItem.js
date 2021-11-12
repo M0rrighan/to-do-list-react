@@ -4,24 +4,20 @@ import { MdDeleteForever } from 'react-icons/md';
 import styles from './TodoItem.module.css';
 
 function TodoItem(props) {
-  const { todo } = props;
+  const {
+    todo, updateCheckbox, deleteItem, updateTitle,
+  } = props;
   const { id, title, completed } = todo;
 
   function handleCheckbox() {
-    props.updateCheckbox(id);
+    updateCheckbox(id);
   }
 
   function handleDeleteItem() {
-    props.deleteItem(id);
+    deleteItem(id);
   }
 
   const [editing, setEditing] = useState(false);
-
-  // useEffect(() => {
-  //   return () => {
-  //     console.log("Cleaning up...")
-  //   }
-  // }, [])
 
   const handleEditing = () => {
     setEditing(true);
@@ -34,7 +30,7 @@ function TodoItem(props) {
   };
 
   const handleUpdateTitle = (e) => {
-    props.updateTitle(e.target.value, id);
+    updateTitle(e.target.value, id);
   };
 
   const viewMode = {};

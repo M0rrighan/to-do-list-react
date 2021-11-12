@@ -13,10 +13,12 @@ function InputTodo(props) {
     });
   };
 
+  const { addTodoItem } = props;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputField.title.trim()) {
-      props.addTodoItem(inputField.title);
+      addTodoItem(inputField.title);
       setInputField({
         title: '',
       });
