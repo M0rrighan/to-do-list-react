@@ -10,11 +10,11 @@ import NoMatch from './pages/NoMatch';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
+    <Router basename="/to-do-list-react">
       <Navbar />
       <Routes>
         <Route
-          path="/to-do-list-react"
+          path="/"
           element={<TodoContainer />}
         />
         <Route path="/about" element={<About />} />
